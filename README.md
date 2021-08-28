@@ -52,3 +52,6 @@ When executed, this code outputs:
 ~~~
 3-Ball: [1. 0. 0. 0.]
 ~~~
+These are the expected Betti numbers of the 3-ball.
+
+Another example regarding the 2-dimensional Klein bottle is given in `betti_test.py`.
