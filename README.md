@@ -52,7 +52,7 @@ print(f'3-Ball: {ball.betti_numbers()}')
 
 When executed, this code outputs:
 ~~~
-3-Ball: [1. 0. 0. 0.]
+3-Ball: [1, 0, 0, 0]
 ~~~
 These are the expected Betti numbers of the 3-ball.
 
