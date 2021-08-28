@@ -5,11 +5,11 @@ This repository computes Betti numbers of a topological space by taking advantag
 
 Betti numbers can be thought of as a count of p-dimensional holes in a topological space. They are computed by finding the rank of p-th homology group of a triangulating simplicial complex of a space. By computing the Smith normal form of these boundary matrices, one can easily compute the ranks of the p-th homology groups of the complex, i.e. the Betti numbers.
 
-A boundary matrix is a simple construct, with **a_i,j = 1** if the i-th (p-1)-simplex is a face of the j-th p-simplex and **a_i,j = 0** otherwise.
+The p-th boundary matrix of a complex is a simple construct, with **a_i,j = 1** if the i-th (p-1)-simplex is a face of the j-th p-simplex and **a_i,j = 0** otherwise.
 
 ## Example
 
-To find the Betti numbers of the 3-dimensional ball, we can triangulate it with a single tetrahedron and find the boundary matrix describing this tetrahedron.
+To find the Betti numbers of the 3-dimensional ball, we can triangulate it with a single tetrahedron and find each p-th boundary matrix describing this tetrahedron.
 
 ~~~
 '''
