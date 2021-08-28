@@ -1,7 +1,7 @@
 # Computing Betti Numbers
 
 ## Description
-This repository computes Betti numbers of a topological space by taking advantage of boundary matrices of a triangulating simplicial complex. It was written to programatically solve the problem of finding the Betti numbers of the 2-dimensional Klein bottle, given as an exercise in Edelsburnner and Harer's *Computational Topology: An Introduction*.
+This repository computes Betti numbers of a topological space by taking advantage of boundary matrices of a triangulating simplicial complex. It was written to programatically solve the problem of finding the Betti numbers of the 2-dimensional Klein bottle, given as an exercise in Edelsbrunner and Harer's *Computational Topology: An Introduction*.
 
 Betti numbers can be thought of as a count of p-dimensional holes in a topological space. They are computed by finding the rank of p-th homology group of a triangulating simplicial complex of a space. Such a complex can be described as a collection of boundary matrices describing the (p-1)-dimensional boundaries of each p-simplex in the simplicial complex.
 
