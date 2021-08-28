@@ -38,6 +38,36 @@ ball.add_boundary_matrix(3, np.array([
 print(f'3-Ball: {ball.betti_numbers()}')
 
 '''
+Compute the Betti numbers of the 2-sphere triangulated by the faces of a single tetrahedron.
+'''
+sphere = SimplicialComplex()
+
+sphere.add_boundary_matrix(0, np.array([
+    [1,1,1,1]
+]))
+
+sphere.add_boundary_matrix(1, np.array([
+    [1,1,1,0,0,0],
+    [1,0,0,1,1,0],
+    [0,1,0,1,0,1],
+    [0,0,1,0,1,1]
+]))
+
+sphere.add_boundary_matrix(2, np.array([
+    [1,1,0,0],
+    [1,0,1,0],
+    [0,1,1,0],
+    [1,0,0,1],
+    [0,1,0,1],
+    [0,0,1,1]
+]))
+
+# Notice this is the same construction as above but without the 3-dimensional filling
+
+# Expected: [1,0,1]
+print(f'2-Sphere: {sphere.betti_numbers()}')
+
+'''
 Compute the Betti numbers of the 2-dimensional Klein bottle
 '''
 
@@ -106,3 +136,37 @@ torus.add_boundary_matrix(2, np.array([
 
 # Expected: [1,2,1]
 print(f'Torus: {torus.betti_numbers()}')
+
+'''
+Compute the Betti numbers of the 2-dimensional mobius strip
+'''
+
+mobius = SimplicialComplex()
+
+mobius.add_boundary_matrix(0, np.array([
+    [1,1,1,1,1]
+]))
+
+mobius.add_boundary_matrix(1, np.array([
+    [1,1,1,1,0,0,0,0,0,0],
+    [1,0,0,0,1,1,1,0,0,0],
+    [0,1,0,0,1,0,0,1,1,0],
+    [0,0,1,0,0,1,0,1,0,1],
+    [0,0,0,1,0,0,1,0,1,1]
+]))
+
+mobius.add_boundary_matrix(2, np.array([
+    [1,1,0,0,0],
+    [1,0,0,0,0],
+    [0,0,0,0,1],
+    [0,1,0,0,1],
+    [1,0,1,0,0],
+    [0,0,1,0,0],
+    [0,1,0,0,0],
+    [0,0,1,1,0],
+    [0,0,0,1,0],
+    [0,0,0,1,1]
+]))
+
+# Expected: [1,1,0]
+print(f'Mobius Strip: {mobius.betti_numbers()}')
