@@ -56,4 +56,4 @@ When executed, this code outputs:
 ~~~
 These are the expected Betti numbers of the 3-ball.
 
-Additional examples regarding the 2-dimensional Klein bottle and torus are given in `betti_test.py`.
+Additional examples regarding the 2-dimensional Klein bottle and torus are given in `test.py`.
