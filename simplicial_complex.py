@@ -37,7 +37,7 @@ class SimplicialComplex:
         for p in self.boundary_matrices:
             # Get the p-th boundary matrix
             mat = self.boundary_matrices[p]
-            snf = smith_normal_form(mat.copy(), 0)
+            snf = smith_normal_form(mat)
             
             '''
             The rank of Z_p is equivalent to the number of zero columns in the Smith normal
@@ -75,6 +75,9 @@ class SimplicialComplex:
         # Convert reduced Betti number to actual
         betti[0] = betti[0] + 1
 
+        # Convert to list of integers
+        betti = list(betti.astype(int))
+
         return betti
 
 '''
@@ -82,7 +85,11 @@ Reduce matrix over Z2 to Smith normal form.
 
 Source: Edelsburnner & Harer - "Computational Topology: An Introduction"
 '''
-def smith_normal_form(mat, x):
+def smith_normal_form(mat, x=0):
+    # Prevent in-place operations on initially passed matrix
+    if x < 1:
+        mat = mat.copy()
+
     rows, cols = mat.shape[0], mat.shape[1]
 
     ones = np.where(mat[x:, x:] == 1)
