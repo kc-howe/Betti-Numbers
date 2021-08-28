@@ -3,9 +3,9 @@
 ## Description
 This repository computes Betti numbers of a topological space by taking advantage of boundary matrices of a triangulating simplicial complex. It was written to programatically solve the problem of finding the Betti numbers of the 2-dimensional Klein bottle, given as an exercise in Edelsburnner and Harer's *Computational Topology: An Introduction*.
 
-Betti numbers can be thought of as a count of p-dimensional holes in a topological space. They are computed by finding the rank of p-th homology group of a triangulating simplicial complex of a space. By computing the Smith normal form of these boundary matrices, one can easily compute the ranks of the p-th homology groups of the complex, i.e. the Betti numbers.
+Betti numbers can be thought of as a count of p-dimensional holes in a topological space. They are computed by finding the rank of p-th homology group of a triangulating simplicial complex of a space. Such a complex can be described as a collection of boundary matrices describing the (p-1)-dimensional boundaries of each p-simplex in the simplicial complex.
 
-The p-th boundary matrix of a complex is a simple construct, with **a_i,j = 1** if the i-th (p-1)-simplex is a face of the j-th p-simplex and **a_i,j = 0** otherwise.
+The p-th boundary matrix of a complex is a simple construct, with **a_i,j = 1** if the i-th (p-1)-simplex is a face of the j-th p-simplex and **a_i,j = 0** otherwise. By computing the Smith normal form of these boundary matrices, one can easily compute the ranks of the p-th homology groups of the complex, i.e. the Betti numbers.
 
 Unfortunately this approach is untenable for large complexes, as the boundary matrices of a complex  are generally sparse and quite large.
 
