@@ -104,4 +104,5 @@ torus.add_boundary_matrix(2, np.array([
     [0,0,0,1,0,0,1,0]
 ]))
 
+# Expected: [1,2,1]
 print(f'Torus: {torus.betti_numbers()}')
