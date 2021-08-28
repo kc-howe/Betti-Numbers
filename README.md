@@ -7,6 +7,8 @@ Betti numbers can be thought of as a count of p-dimensional holes in a topologic
 
 The p-th boundary matrix of a complex is a simple construct, with **a_i,j = 1** if the i-th (p-1)-simplex is a face of the j-th p-simplex and **a_i,j = 0** otherwise.
 
+Unfortunately this approach is untenable for large complexes, as the boundary matrices of a complex  are generally sparse and quite large.
+
 ## Example
 
 To find the Betti numbers of the 3-dimensional ball, we can triangulate it with a single tetrahedron and find each p-th boundary matrix describing this tetrahedron.
