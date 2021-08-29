@@ -19,7 +19,7 @@ Unfortunately, this approach is untenable for large complexes, as the boundary m
 To find the Betti numbers of the 3-dimensional ball, we can triangulate it with a single tetrahedron and find each p-th boundary matrix describing this tetrahedron.
 
 <p align="center">
-  <img width="300" height="300" src="images/ball-triangulation.jpg">
+  <img width="300" height="300" src="images/ball-triangulation.png">
 </p>
 
 ~~~
