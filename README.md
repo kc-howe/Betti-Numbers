@@ -67,7 +67,7 @@ When executed, this code outputs:
 ~~~
 3-Ball: [1, 0, 0, 0]
 ~~~
-These are the expected Betti numbers of the 3-ball.
+These are the expected Betti numbers of the 3-ball. All of the p-th Betti numbers vanish for positive p, which matches our intuition that a solid ball has no holes.
 
 Additional examples regarding the following spaces are provided in `examples.py`:
 - The 2-dimensional sphere
