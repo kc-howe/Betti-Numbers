@@ -33,7 +33,6 @@ class SimplicialComplex:
     def compute_betti_numbers(self):
         ranks_zp = np.array([])
         ranks_bp_1 = np.array([])
-        betti = []
 
         for p in self.boundary_matrices:
             # Get the p-th boundary matrix
@@ -71,7 +70,7 @@ class SimplicialComplex:
 
         # rankH_p = rankZ_p - rankB_p
         betti = ranks_zp - ranks_bp
-        # Cut off padding
+        # Remove padding
         betti = betti[:-1]
         # Convert reduced Betti number to actual
         betti[0] = betti[0] + 1
@@ -87,6 +86,21 @@ class SimplicialComplex:
         if recompute or not self.betti_numbers:
             return self.compute_betti_numbers()
         return self.betti_numbers
+    
+    '''
+    Reduced Betti numbers caputure the notion of a 0-dimensional "hole" (i.e. gives 1 when there is a gap
+    between two disconnected vertices).
+    '''
+    def get_reduced_betti_numbers(self, recompute=False):
+        if recompute or not self.betti_numbers:
+            reduced = self.compute_betti_numbers()
+        else:
+            reduced = self.betti_numbers
+
+        reduced[0] = reduced[0] - 1
+
+        return reduced
+
     
     '''
     The Euler characteristic of a topological space can be given by the alternating sum of its Betti numbers
