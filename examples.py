@@ -10,10 +10,12 @@ Compute the Betti numbers of the 3-ball triangulated by a single tetrahedron.
 '''
 ball = SimplicialComplex()
 
+# Add vertices
 ball.add_boundary_matrix(0, np.array([
     [1,1,1,1]
 ]))
 
+# Relate vertices (rows) to edges (columns)
 ball.add_boundary_matrix(1, np.array([
     [1,1,1,0,0,0],
     [1,0,0,1,1,0],
@@ -21,6 +23,7 @@ ball.add_boundary_matrix(1, np.array([
     [0,0,1,0,1,1]
 ]))
 
+# Relate edges (rows) to faces (columns)
 ball.add_boundary_matrix(2, np.array([
     [1,1,0,0],
     [1,0,1,0],
@@ -30,6 +33,7 @@ ball.add_boundary_matrix(2, np.array([
     [0,0,1,1]
 ]))
 
+# Relate faces (rows) to solid interior (column)
 ball.add_boundary_matrix(3, np.array([
     [1],
     [1],
