@@ -106,7 +106,7 @@ class SimplicialComplex:
     The Euler characteristic of a topological space can be given by the alternating sum of its Betti numbers
     '''
     def euler_characteristic(self):
-        betti = self.betti_numbers
+        betti = self.get_betti_numbers()
 
         pos = betti[::2]
         neg = betti[1::2]
