@@ -79,6 +79,17 @@ class SimplicialComplex:
         betti = list(betti.astype(int))
 
         return betti
+    
+    '''
+    The Euler characteristic of a topological space can be given by the alternating sum of its Betti numbers
+    '''
+    def euler_characteristic(self):
+        betti = self.betti_numbers()
+
+        pos = betti[::2]
+        neg = betti[1::2]
+
+        return sum(pos) - sum(neg)
 
 '''
 Reduce matrix over Z2 to Smith normal form.

@@ -7,6 +7,8 @@ Betti numbers can be thought of as a count of p-dimensional holes in a topologic
 
 The p-th boundary matrix of a complex is a simple construct, with **a_i,j = 1** if the i-th (p-1)-simplex is a face of the j-th p-simplex and **a_i,j = 0** otherwise. By computing the Smith normal form of these boundary matrices, one can easily compute the ranks of the p-th homology groups of the complex, i.e. the Betti numbers.
 
+Computing the Betti numbers of a space also enables us to compute the Euler characteristic of that space.
+
 Unfortunately this approach is untenable for large complexes, as the boundary matrices of a complex  are generally sparse and quite large.
 
 ## Example
@@ -61,3 +63,4 @@ Additional examples regarding the following spaces are provided in `examples.py`
 - The klein bottle
 - The torus
 - The mobius strip
+- The cylinder

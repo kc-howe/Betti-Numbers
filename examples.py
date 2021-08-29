@@ -2,6 +2,9 @@ import numpy as np
 
 from simplicial_complex import SimplicialComplex
 
+
+print('BETTI NUMBERS\n')
+
 '''
 Compute the Betti numbers of the 3-ball triangulated by a single tetrahedron.
 '''
@@ -170,3 +173,54 @@ mobius.add_boundary_matrix(2, np.array([
 
 # Expected: [1,1,0]
 print(f'Mobius Strip: {mobius.betti_numbers()}')
+
+'''
+Compute the Betti numbers of the 2-dimensional cylinder
+'''
+
+cylinder = SimplicialComplex()
+
+cylinder.add_boundary_matrix(0, np.array([
+    [1,1,1,1,1,1]
+]))
+
+cylinder.add_boundary_matrix(1, np.array([
+    [1,1,1,1,0,0,0,0,0,0,0,0],
+    [1,0,0,0,1,1,1,0,0,0,0,0],
+    [0,1,0,0,1,0,0,1,1,0,0,0],
+    [0,0,1,0,0,1,0,0,0,1,0,1],
+    [0,0,0,0,0,0,1,1,0,1,1,0],
+    [0,0,0,1,0,0,0,0,1,0,1,1]
+]))
+
+cylinder.add_boundary_matrix(2, np.array([
+    [1,0,0,0,0,0],
+    [0,0,0,0,1,0],
+    [1,0,0,0,0,1],
+    [0,0,0,0,1,1],
+    [0,0,1,0,0,0],
+    [1,1,0,0,0,0],
+    [0,1,1,0,0,0],
+    [0,0,1,1,0,0],
+    [0,0,0,1,1,0],
+    [0,1,0,0,0,0],
+    [0,0,0,1,0,0],
+    [0,0,0,0,0,1]
+]))
+
+# Expected: [1,1,0]
+print(f'Cylinder: {cylinder.betti_numbers()}')
+
+
+print('\nEULER CHARACTERISTIC\n')
+
+'''
+Euler characteristic computations
+'''
+
+print(f'3-Ball: {ball.euler_characteristic()}')
+print(f'2-Sphere: {sphere.euler_characteristic()}')
+print(f'Klein Bottle: {klein.euler_characteristic()}')
+print(f'Torus: {torus.euler_characteristic()}')
+print(f'Mobius Strip: {mobius.euler_characteristic()}')
+print(f'Cylinder: {cylinder.euler_characteristic()}')
