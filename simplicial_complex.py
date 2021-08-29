@@ -14,6 +14,7 @@ class SimplicialComplex:
 
     def __init__(self):
         self.boundary_matrices = dict()
+        self.betti_numbers = []
     
     def add_boundary_matrix(self, dim, mat):
         # Need lower dimensional simplices to be defined before higher-dimensional simplies can be defined
@@ -29,7 +30,7 @@ class SimplicialComplex:
         return self.boundary_matrices[dim]
     
     # Compute Betti numbers by computing the SNF of each matrix
-    def betti_numbers(self):
+    def compute_betti_numbers(self):
         ranks_zp = np.array([])
         ranks_bp_1 = np.array([])
         betti = []
@@ -50,9 +51,9 @@ class SimplicialComplex:
             one_rows = np.where(np.any(snf, axis=1))[0]
             zero_cols = np.where(~np.any(snf, axis=0))[0]
 
-            if len(one_rows) > 0:
+            if one_rows.size:
                 last_one_row = one_rows[-1]
-            if len(zero_cols) > 0:
+            if zero_cols.size:
                 first_zero_col = zero_cols[0]
             
             rank_zp = snf.shape[1] - first_zero_col
@@ -78,13 +79,20 @@ class SimplicialComplex:
         # Convert to list of integers
         betti = list(betti.astype(int))
 
+        self.betti_numbers = betti
+
         return betti
+    
+    def get_betti_numbers(self, recompute=False):
+        if recompute or not self.betti_numbers:
+            return self.compute_betti_numbers()
+        return self.betti_numbers
     
     '''
     The Euler characteristic of a topological space can be given by the alternating sum of its Betti numbers
     '''
     def euler_characteristic(self):
-        betti = self.betti_numbers()
+        betti = self.betti_numbers
 
         pos = betti[::2]
         neg = betti[1::2]
@@ -105,7 +113,7 @@ def smith_normal_form(mat, x=0):
 
     ones = np.where(mat[x:, x:] == 1)
 
-    if len(ones[0]) > 0:
+    if ones[0].size:
         k,l = ones[0][0]+x, ones[1][0]+x
 
         # Swap rows x and k
