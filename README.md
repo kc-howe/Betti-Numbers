@@ -1,7 +1,7 @@
 # Betti Numbers
 
 ## Description
-This repository computes Betti numbers of a topological space. These Betti numbers can be computed by first triangulating the topological space by a simplicial complex, then representing this complex as a collection of boundary matrices, and lastly performing some reduction on these matrices. The original purpose of this repository was programatically solve the problem of finding the Betti numbers of the 2-dimensional Klein bottle, given as an exercise in Edelsbrunner and Harer's *Computational Topology: An Introduction*.
+This repository computes Betti numbers of a topological space. These Betti numbers can be computed by first triangulating the topological space by a simplicial complex, then representing this complex as a collection of boundary matrices, and lastly performing some reduction on these matrices. The original purpose of this repository was to programatically solve the problem of finding the Betti numbers of the 2-dimensional Klein bottle, given as an exercise in Edelsbrunner and Harer's *Computational Topology: An Introduction*.
 
 ### Betti Numbers
 Betti numbers can be thought of as a count of p-dimensional holes in a topological space for positive dimension p. The 0th Betti number of a space is better thought of as a count of disconnected components of a space. Betti numbers are computed by finding the rank of the p-th homology group H<sub>p</sub> of a triangulating simplicial complex of a space. Such a complex can be described as a collection of boundary matrices describing the (p-1)-dimensional boundaries of each p-simplex in the simplicial complex.
@@ -13,10 +13,10 @@ The p-th boundary matrix of a complex is a relatively simple construct. Given a 
 Computing the Betti numbers of a space also enables us to compute the Euler characteristic of that space. By the Euler-Poincaré theorem, the Euler characteristic of a topological space is merely the alternating sum of its Betti numbers. A few examples of Euler characteristic are given in `examples.py`.
 
 ### Reduced Betti Numbers
-Reduced Betti numbers give a somewhat more intuitive and pleasing result when interpreting Betti numbers as p-dimensional holes. In summary, they are equivalent to the standard Betti numbers except for the case of p=0, in which case the reduced 0th Betti number is simply the 0th Betti number minus one. This guarantees that the 0th reduced Betti number is 1 if there is a gap between two disconnected vertices (i.e. a 0-dimensional hole). Techinically, the procedure of reducing boundary matrices produces the reduced Betti numbers of a space. This repository stores the standard Betti numbers after a computation, however both are retrievable.
+Reduced Betti numbers give a somewhat more intuitive and pleasing result when interpreting Betti numbers as p-dimensional holes. In brief, they are equivalent to the standard Betti numbers except in the case of p=0, where the reduced 0th Betti number is the 0th Betti number minus one. This guarantees that the 0th reduced Betti number counts gaps between disconnected vertices (i.e. 0-dimensional holes). Techinically, the procedure of reducing boundary matrices produces the reduced Betti numbers of a space. This repository stores the standard Betti numbers after a computation, however both are retrievable.
 
 ### Limitations
-Unfortunately, this approach is untenable for large complexes, as the boundary matrices of a complex are generally sparse and quite large.
+Unfortunately, this approach to representing topological spaces and computing their Betti numbers is untenable for large complexes, as the boundary matrices of a complex are generally sparse and quite large. A sparse-matrix implementation would yield greater efficiency for larger complexes.
 
 ## Example
 To find the Betti numbers of the 3-dimensional ball, we can triangulate it with a single tetrahedron and find each p-th boundary matrix describing this tetrahedron.
