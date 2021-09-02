@@ -219,9 +219,9 @@ print(f'Cylinder: {cylinder.get_betti_numbers()}')
 Compute the Betti numbers of the 2-dimensional dunce cap
 
 I consider this the real magnum opus of this project. This is
-a three-credit assignment from Hedelsbrunner and Harer. (i.e.
-the most difficult!)
-
+was by far the most difficult triangulation to compute boundary
+matrices for, not only due to the size of the triangulation, but
+due also to the complexity of the space.
 '''
 
 dunce = SimplicialComplex()
@@ -268,6 +268,7 @@ dunce.add_boundary_matrix(2, np.array([
     [0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0]
 ]))
 
+# Expected: [1,0,0]
 print(f'Dunce Cap: {dunce.get_betti_numbers()}')
 
 print('\nEULER CHARACTERISTIC\n')
