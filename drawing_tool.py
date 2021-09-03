@@ -27,11 +27,13 @@ do so.
 def main():
     
     pygame.init()
-    
+
     SCREEN.fill(WHITE)
 
     clock = pygame.time.Clock()
 
+    icon = pygame.image.load('images/triangle-icon.png')
+    pygame.display.set_icon(icon)
     pygame.display.set_caption('Simplicial Complex Drawing Tool')
 
     points = []
