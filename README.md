@@ -79,3 +79,15 @@ Additional examples regarding the following spaces are provided in `examples.py`
 - The mobius strip
 - The cylinder
 - The dunce cap
+
+## Drawing Tool Instructions
+
+The drawing tool allows a user to draw up to 2-dimensional simplicial complexes. To draw a simplicial complex:
+1. Click to add vertices to the complex.
+2. Click existing vertices to select them (up to 3), and press `SPACE` to add the corresponding simplex.
+3. Right click to remove vertices.
+4. Select vertices and press `SPACE` to remove the corresponding simplex if it already exists.
+
+<p align="center">
+  <img width="550" height="339" src="images/drawing-tool.gif">
+</p>
