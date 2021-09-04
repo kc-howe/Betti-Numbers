@@ -50,14 +50,18 @@ def main():
 
     while True:
         
+        # Set FPS
         clock.tick(60)
 
-        # Allow user to close the window without crashing
+        
+        # Handle events
         for event in pygame.event.get():
 
+            # Allow user to close the window without crashing
             if event.type == pygame.QUIT:
                 sys.exit()
             
+            # Handle mouse events
             if event.type == pygame.MOUSEBUTTONDOWN:
                 state = pygame.mouse.get_pressed()
                 if state[0]:
@@ -67,6 +71,7 @@ def main():
                 
                 betti_numbers = recompute_betti_numbers(simplex_verts, simplex_edges, simplex_triangles)
             
+            # Handle keyboard events
             if event.type == pygame.KEYDOWN:
                 key = event.key
                 simplex_edges, simplex_triangles, betti_numbers = handle_keys(key, selected, simplex_verts, simplex_edges, simplex_triangles, betti_numbers)
@@ -86,6 +91,7 @@ def main():
             circle = pygame.draw.circle(SCREEN, BLACK, v, 8)
             points.append(circle)
 
+        # Display Betti numbers at the top of the screen if any
         text = font.render('', False, BLACK)
         if betti_numbers:
             text = font.render('Betti Numbers: ' + str(betti_numbers), False, BLACK)
