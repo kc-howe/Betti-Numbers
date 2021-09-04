@@ -84,8 +84,8 @@ def main():
             triangle = pygame.draw.polygon(SCREEN, AQUA, t, 0)
         for e in simplex_edges:
             e = list(e)
-            pygame.draw.line(SCREEN, BLACK, e[0], e[1], 4)
-            pygame.draw.line(SCREEN, GREY, e[0], e[1], 2)
+            pygame.draw.line(SCREEN, BLACK, e[0], e[1], 3)
+            pygame.draw.line(SCREEN, GREY, e[0], e[1], 1)
         for v in simplex_verts:
             circle = pygame.draw.circle(SCREEN, BLACK, v, 8)
             pygame.draw.circle(SCREEN, BLUE, v, 7)
