@@ -12,9 +12,9 @@ SCREEN = pygame.display.set_mode(SIZE)
 WHITE = (255,255,255)
 BLACK = (0,0,0)
 GREY = (114, 114, 114)
-DARK = (0,80,140)
-AQUA = (212, 255, 242)
-PINK = (255, 188, 220)
+DARK = (178,205,245)
+AQUA = (200, 247, 230)
+PINK = 	(245, 178, 205)
 
 '''
 A drawing tool for simplicial complexes.
@@ -84,12 +84,14 @@ def main():
             triangle = pygame.draw.polygon(SCREEN, AQUA, t, 0)
         for e in simplex_edges:
             e = list(e)
-            edge = pygame.draw.line(SCREEN, GREY, e[0], e[1], 4)
-        for s in selected:
-            circle = pygame.draw.circle(SCREEN, PINK, s, 14)
+            pygame.draw.line(SCREEN, BLACK, e[0], e[1], 4)
+            pygame.draw.line(SCREEN, GREY, e[0], e[1], 2)
         for v in simplex_verts:
             circle = pygame.draw.circle(SCREEN, BLACK, v, 8)
+            pygame.draw.circle(SCREEN, DARK, v, 6)
             points.append(circle)
+        for s in selected:
+            circle = pygame.draw.circle(SCREEN, PINK, s, 6)
 
         # Display Betti numbers at the top of the screen if any
         text = font.render('', False, BLACK)
