@@ -11,7 +11,7 @@ SCREEN = pygame.display.set_mode(SIZE)
 # Define colors
 WHITE = (255,255,255)
 BLACK = (0,0,0)
-GREY = (114, 114, 114)
+GREY = (164, 164, 194)
 BLUE = (178,205,245)
 AQUA = (200, 247, 230)
 PINK = 	(245, 178, 205)
@@ -88,10 +88,10 @@ def main():
             pygame.draw.line(SCREEN, GREY, e[0], e[1], 2)
         for v in simplex_verts:
             circle = pygame.draw.circle(SCREEN, BLACK, v, 8)
-            pygame.draw.circle(SCREEN, BLUE, v, 6)
+            pygame.draw.circle(SCREEN, BLUE, v, 7)
             points.append(circle)
         for s in selected:
-            circle = pygame.draw.circle(SCREEN, PINK, s, 6)
+            circle = pygame.draw.circle(SCREEN, PINK, s, 7)
 
         # Display Betti numbers at the top of the screen if any
         text = font.render('', False, BLACK)
