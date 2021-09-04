@@ -87,6 +87,7 @@ The drawing tool allows a user to draw up to 2-dimensional simplicial complexes.
 2. Click existing vertices to select them (up to 3), and press `SPACE` to add the corresponding simplex.
 3. Right click to remove vertices.
 4. Select vertices and press `SPACE` to remove the corresponding simplex if it already exists.
+5. Press 'R' to reset the drawing area.
 
 <p align="center">
   <img width="550" height="339" src="images/drawing-tool.gif">

@@ -74,7 +74,7 @@ def main():
             # Handle keyboard events
             if event.type == pygame.KEYDOWN:
                 key = event.key
-                simplex_edges, simplex_triangles, betti_numbers = handle_keys(key, selected, simplex_verts, simplex_edges, simplex_triangles, betti_numbers)
+                selected, simplex_verts, simplex_edges, simplex_triangles, betti_numbers = handle_keys(key, selected, simplex_verts, simplex_edges, simplex_triangles, betti_numbers)
                 betti_numbers = recompute_betti_numbers(simplex_verts, simplex_edges, simplex_triangles)
 
         # Draw the complex specified by the vertex, edge, and triangle sets
@@ -115,7 +115,8 @@ def handle_left_mouseclick(points, selected, simplex_verts):
     for p in points:
         if p.collidepoint(pos):
             clicked_point = p
-            if clicked_point.center in selected:
+            clicked_center = clicked_point.center
+            if clicked_center in selected:
                 select = False
                 deselect = True
             exists = True
@@ -124,9 +125,9 @@ def handle_left_mouseclick(points, selected, simplex_verts):
     if not exists:
         simplex_verts.append(pos)
     elif select:
-        selected.append(clicked_point.center)
-    elif deselect:
-        selected.remove(clicked_point.center)
+        selected.append(clicked_center)
+    elif deselect and clicked_center in selected:
+        selected.remove(clicked_center)
     
     if len(selected) > 3:
         del selected[0]
@@ -213,10 +214,13 @@ def handle_keys(key, selected, simplex_verts, simplex_edges, simplex_triangles, 
             else:
                 simplex_triangles.remove(simplex)
     
+    if key == pygame.K_r:
+        selected, simplex_verts, simplex_edges, simplex_triangles = [], [], [], []
+    
     # Reset screen
     SCREEN.fill(WHITE)
 
-    return simplex_edges, simplex_triangles, betti_numbers
+    return selected, simplex_verts, simplex_edges, simplex_triangles, betti_numbers
 
 '''
 Computes boundary matrices for the drawn complex.
