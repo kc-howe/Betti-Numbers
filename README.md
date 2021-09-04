@@ -90,5 +90,5 @@ The drawing tool allows a user to draw up to 2-dimensional simplicial complexes.
 5. Press `R` to reset the drawing area.
 
 <p align="center">
-  <img width="550" height="339" src="images/drawing-tool.gif">
+  <img width="561" height="347" src="images/drawing-tool.gif">
 </p>
