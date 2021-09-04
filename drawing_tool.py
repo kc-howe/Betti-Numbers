@@ -5,7 +5,7 @@ import numpy as np
 
 from simplicial_complex import SimplicialComplex
 
-SIZE = WIDTH, HEIGHT = 1200, 900
+SIZE = WIDTH, HEIGHT = 1000, 620
 SCREEN = pygame.display.set_mode(SIZE)
 
 # Define colors
@@ -46,7 +46,7 @@ def main():
     betti_numbers = []
     
     pygame.font.init()
-    font = pygame.font.SysFont('Century Gothic', 30)
+    font = pygame.font.SysFont('Century Gothic', 26)
 
     while True:
         
