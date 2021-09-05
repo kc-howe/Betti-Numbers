@@ -13,7 +13,7 @@ WHITE = (255,255,255)
 BLACK = (0,0,0)
 GREY = (164, 164, 194)
 BLUE = (178,205,245)
-AQUA = (200, 247, 230)
+AQUA = (225, 255, 245)
 PINK = 	(245, 178, 205)
 
 '''
@@ -46,7 +46,7 @@ def main():
     betti_numbers = []
     
     pygame.font.init()
-    font = pygame.font.SysFont('Century Gothic', 26)
+    font = pygame.font.SysFont('Century Gothic', 22)
 
     while True:
         
