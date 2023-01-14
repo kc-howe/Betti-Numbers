@@ -3,6 +3,8 @@ import sys
 
 import numpy as np
 
+from pygame import gfxdraw
+
 from simplicial_complex import SimplicialComplex
 
 SIZE = WIDTH, HEIGHT = 1000, 620
@@ -12,8 +14,7 @@ SCREEN = pygame.display.set_mode(SIZE)
 WHITE = (255,255,255)
 BLACK = (0,0,0)
 GREY = (164, 164, 194)
-BLUE = (178,205,245)
-AQUA = (225, 255, 245)
+AQUA = (225, 255, 245, 0.7)
 PINK = 	(245, 178, 205)
 
 '''
@@ -46,7 +47,7 @@ def main():
     betti_numbers = []
     
     pygame.font.init()
-    font = pygame.font.SysFont('Century Gothic', 22)
+    font = pygame.font.SysFont('Consolas', 25)
 
     while True:
         
@@ -81,22 +82,21 @@ def main():
         points = []
         for t in simplex_triangles:
             t = list(t)
-            triangle = pygame.draw.polygon(SCREEN, AQUA, t, 0)
+            pygame.draw.polygon(SCREEN, AQUA, t, 0)
         for e in simplex_edges:
             e = list(e)
-            pygame.draw.line(SCREEN, BLACK, e[0], e[1], 3)
-            pygame.draw.line(SCREEN, GREY, e[0], e[1], 1)
+            pygame.draw.line(SCREEN, BLACK, e[0], e[1], 5)
         for v in simplex_verts:
-            circle = pygame.draw.circle(SCREEN, BLACK, v, 8)
-            pygame.draw.circle(SCREEN, BLUE, v, 7)
+            circle = pygame.draw.circle(SCREEN, BLACK, v, 10)
+            pygame.draw.circle(SCREEN, GREY, v, 7)
             points.append(circle)
         for s in selected:
-            circle = pygame.draw.circle(SCREEN, PINK, s, 7)
+            pygame.draw.circle(SCREEN, PINK, s, 7)
 
         # Display Betti numbers at the top of the screen if any
-        text = font.render('', False, BLACK)
+        text = font.render('', True, BLACK)
         if betti_numbers:
-            text = font.render('Betti Numbers: ' + str(betti_numbers), False, BLACK)
+            text = font.render('Betti Numbers: ' + str(betti_numbers), True, BLACK)
         
         SCREEN.blit(text, (10, 10))
         pygame.display.flip()
