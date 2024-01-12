@@ -24,7 +24,18 @@ class SimplicialComplex:
         self.betti_numbers = []
     
     def add_boundary_matrix(self, dim, mat):
+        '''
+        Add a boundary matrix to the simplicial complex.
 
+        Parameters:
+        -----------
+        dim : int
+            Dimension of simplices described by matrix.
+        mat : array-like
+            2D array describing boundary relations between simplices and
+            their faces.
+        '''
+        
         # Need lower dimensional simplices to be defined before
         # higher-dimensional simplies can be defined
         if dim > 0 and (dim - 1) not in self.boundary_matrices:
@@ -48,6 +59,18 @@ class SimplicialComplex:
 
         Source: Edelsburnner & Harer - "Computational Topology: An
         Introduction"
+
+        Parameters:
+        -----------
+        mat : ndarray
+            Matrix to reduce.
+        x : int, optional (default=0)
+            Parameter tracking number of recursive iterations.
+        
+        Returns:
+        --------
+        mat : ndarray
+            Reduced matrix.
         '''
         # Prevent in-place operations on initially passed matrix
         if x < 1:
@@ -151,7 +174,6 @@ class SimplicialComplex:
         reduced[0] = reduced[0] - 1
 
         return reduced
-
     
     '''
     The Euler characteristic of a topological space can be given by the
@@ -200,6 +222,7 @@ class SparseSimplicialComplex:
     dimension : int
         The maximum dimension of simplices in the complex.
     '''
+
     def __init__(self):
         self.boundary_matrices = dict()
         self.betti_numbers = []
@@ -297,6 +320,24 @@ class SparseSimplicialComplex:
         return mat
 
     def _sparse_snf(self, mat, x=0):
+        '''
+        Reduce sparse matrix over Z2 to Smith normal form.
+
+        Source: Edelsburnner & Harer - "Computational Topology: An
+        Introduction"
+
+        Parameters:
+        -----------
+        mat : CSC sparse matrix
+            Matrix to reduce.
+        x : int, optional (default=0)
+            Parameter tracking number of recursive iterations.
+        
+        Returns:
+        --------
+        mat : CSC sparse matrix
+            Reduced matrix.
+        '''
         
         # Prevent in-place operations on initially passed matrix
         if x < 1:
@@ -347,7 +388,7 @@ class SparseSimplicialComplex:
 
             with warnings.catch_warnings():
                 # SciPy will warn us that csc access is slow, but the
-                # speedup in arithmetic outweighs it
+                # speedup in arithmetic outweighs this so we don't care
                 warnings.filterwarnings('ignore')
                 snf = self._sparse_snf(mat)
             
@@ -413,7 +454,6 @@ class SparseSimplicialComplex:
         reduced[0] = reduced[0] - 1
 
         return reduced
-
     
     '''
     The Euler characteristic of a topological space can be given by the
@@ -426,36 +466,3 @@ class SparseSimplicialComplex:
         neg = betti[1::2]
 
         return sum(pos) - sum(neg)
-    
-    def compile_boundary_matrix(self):
-
-        bmat_size = 1
-        locs = [0,1]
-        for dim, bmat in self.boundary_matrices.items():
-            bmat_size += bmat.shape[1]
-            locs.append(bmat_size)
-
-        bmat = lil_matrix((bmat_size, bmat_size))
-        for dim, bmat_partial in self.boundary_matrices.items():
-            if dim < 0:
-                continue
-            bmat[locs[dim]:locs[dim+1],locs[dim+1]:locs[dim+2]] = bmat_partial
-        
-        return bmat.tocsc()
-
-if __name__ == '__main__':
-
-    sc = SparseSimplicialComplex()
-
-    sc.set_boundary_matrix(
-        ['A','B','C']
-    )
-    sc.set_boundary_matrix(
-        [
-            ['A','B'],
-            ['A','C'],
-            ['B','C']
-        ]
-    )
-
-    print(sc.compute_betti_numbers())
