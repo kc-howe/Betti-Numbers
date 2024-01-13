@@ -3,7 +3,7 @@ import warnings
 import numpy as np
 
 from itertools import combinations
-from scipy.sparse import lil_matrix, csc_matrix, find
+from scipy.sparse import csc_matrix, find
 
 class SimplicialComplex:
     '''
@@ -215,10 +215,6 @@ class SparseSimplicialComplex:
     betti_numbers : list
         Betti numbers of the complex, if computed.
     
-    dim_locs : list
-        Contains column indices at which p-dimensional simplices begin
-        in the compiled boundary matrix.
-    
     dimension : int
         The maximum dimension of simplices in the complex.
     '''
@@ -226,33 +222,64 @@ class SparseSimplicialComplex:
     def __init__(self):
         self.boundary_matrices = dict()
         self.betti_numbers = []
-        self.dim_locs = [0]
-        self.dimension = 0
         self._index_maps = dict()
 
-    def _find_many(self, x, y):
-        if len(x.shape) < 2:
-            return np.nonzero(y[:, None] == x)[1]
-        res = np.where((y[:, None] == x).all(-1))[-1]
-        return res
+    def _find_many(self, test_elements, elements):
+        '''
+        Get indices of all occurrences of values in a query array.
+
+        Parameters:
+        -----------
+        test_elements : array
+            Array to search for values.
+        elements : array
+            Query array containing values to search for.
+        
+        Returns:
+        --------
+        res : array
+            Array of indices at which values of elements were found in
+            test_elements.
+        '''
+        if len(test_elements.shape) < 2:
+            return np.nonzero(elements[:, None] == test_elements)[1]
+        return np.where((elements[:, None] == test_elements).all(-1))[-1]
     
     def _set_index_map(self, p, simplices):
+        '''
+        Helper function for setting index map arrays.
+        '''
         index_map = np.unique(simplices, axis=0)
         self._index_maps[p] = index_map
         return index_map
 
     def _get_indices(self, p, simplices):
+        '''
+        Helper function for getting indices of simplices in boundary
+        matrix.
+        '''
         if p < 0:
             return np.zeros(simplices.shape[0]).astype(int)
         return self._find_many(self._index_maps[p], simplices)
     
-    def _expand_indices(self, p, indices, simplices):
+    def _expand_indices(self, p, indices):
+        '''
+        Helper function for repeating index values for simplices of
+        dimension p.
+        '''
         return np.array([[i] * (p+1) for i in indices]).flatten()
     
     def _get_simplices(self, p, indices):
+        '''
+        Helper function for obtaining simlices given in terms of user-
+        defined vertex labels given their indices in a boundary matrix.
+        '''
         return self._index_maps[p][indices.flatten()].reshape(indices.shape)
     
     def _get_cofaces(self, simplices):
+        '''
+        Helper function for getting all cofaces of simplices.
+        '''
         if len(simplices.shape) < 2:
             return np.zeros_like(simplices)
         q = simplices.shape[1] - 1
@@ -290,7 +317,7 @@ class SparseSimplicialComplex:
         
         self._set_index_map(p, simplices)
         p_indices = self._get_indices(p, simplices)
-        p_indices = self._expand_indices(p, p_indices, simplices)
+        p_indices = self._expand_indices(p, p_indices)
 
         q_simplices = self._get_cofaces(simplices)
         q_indices = self._get_indices(p-1, q_simplices)
@@ -304,10 +331,6 @@ class SparseSimplicialComplex:
         matrix = csc_matrix((np.ones_like(p_indices), (q_indices, p_indices)))
         self.boundary_matrices[p] = matrix
 
-        # Track the maximum dimension of the complex
-        if p > self.dimension:
-            self.dimension = p
-
     def get_boundary_matrix(self, p):
         '''
         Returns p-th boundary matrix.
@@ -316,6 +339,9 @@ class SparseSimplicialComplex:
     
     @staticmethod
     def _sparse_mod2(mat):
+        '''
+        Helper function for performing sparse matrix mod 2 operation.
+        '''
         mat.data %= 2
         return mat
 
