@@ -3,7 +3,13 @@
 ## Description
 This repository computes Betti numbers of a topological space. The Betti numbers of a topological space can be computed by first [triangulating](https://en.wikipedia.org/wiki/Triangulation_(topology)) the space by a [simplicial complex](https://en.wikipedia.org/wiki/Simplicial_complex), then representing this complex as a collection of boundary matrices, and lastly performing some reduction on these boundary matrices.
 
-The original purpose of this repository was to implement in code a general tool for solving the exercises given in Edelsbrunner and Harer's *Computational Topology: An Introduction*. Given there as exercises are a computation of the Betti numbers of the 2-dimensional [Klein bottle](https://en.wikipedia.org/wiki/Klein_bottle), as well as a triangulation of the [dunce cap](https://en.wikipedia.org/wiki/Dunce_hat_(topology)) and a verification of its Betti numbers. (The latter is posed as a high difficulty problem and indeed is significantly more involved, see `examples.py`.)
+This repository contains modules for storing simplicial complexes in the following formats:
+- Boundary matrix collection (`simplicial.boundary_matrix.BoundaryMatrix`)
+- Sparse boundary matrix collection (`simplicial.boundary_matrix.SparseBoundaryMatrix`)
+- Simplex tree (`simplicial.simplex_tree.SimplexTree`)
+  - See [this paper](https://arxiv.org/abs/2001.02581) by Boissonnat & Maria for a definition.
+
+The original purpose of this repository was to implement in code a general tool for solving the exercises given in Edelsbrunner and Harer's *Computational Topology: An Introduction*. Given there as exercises are a computation of the Betti numbers of the 2-dimensional [Klein bottle](https://en.wikipedia.org/wiki/Klein_bottle), as well as a triangulation of the [dunce cap](https://en.wikipedia.org/wiki/Dunce_hat_(topology)) and a verification of its Betti numbers. (The latter is posed as a high difficulty problem and indeed is significantly more involved; see `examples/boundary_matrix_examples.py`.)
 
 ### Betti Numbers
 Betti numbers can be thought of as a count of p-dimensional holes in a topological space for positive dimension p. The 0th Betti number of a space is rather better thought of as a count of its disconnected components. The Betti numbers of a space are computed by finding the rank of the p-th homology group H<sub>p</sub> of a triangulating simplicial complex. Such a complex can be represented as a collection of boundary matrices describing the (p-1)-dimensional boundaries of each p-simplex in the complex.
@@ -24,7 +30,7 @@ Unfortunately, this approach to representing topological spaces and computing th
 To find the Betti numbers of the 3-dimensional ball, we can triangulate it with a single tetrahedron and find each p-th boundary matrix describing this tetrahedron.
 
 <p align="center">
-  <img width="300" height="300" src="images/ball-triangulation.png">
+  <img src="images/ball-triangulation.png">
 </p>
 
 ~~~
@@ -86,11 +92,11 @@ Additional examples regarding the following spaces are provided in `examples.py`
 
 The drawing tool allows a user to draw up to 2-dimensional simplicial complexes. To draw a simplicial complex:
 1. Click to add vertices to the complex.
-2. Click existing vertices to select them (up to 3), and press `SPACE` to add the corresponding simplex.
-3. Right click to remove vertices.
-4. Select vertices and press `SPACE` to remove the corresponding simplex if it already exists.
-5. Press `R` to reset the drawing area.
+2. Click existing vertices to select them (up to 4), and press `space` to add/remove the corresponding simplex.
+3. Right click a single vertex to remove it, or right click the canvas background to clear the current selection.
+5. Press `r` to reset the drawing area.
 
+<br>
 <p align="center">
-  <img width="800" height="601" src="images/drawing-tool-demo.gif">
+  <img src="images/drawing-tool-demo.png">
 </p>

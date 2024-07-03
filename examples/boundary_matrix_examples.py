@@ -1,14 +1,13 @@
 import numpy as np
 
-from simplicial_complex import SimplicialComplex
-
+from simplicial.boundary_matrix import BoundaryMatrix
 
 print('BETTI NUMBERS\n')
 
 '''
 Compute the Betti numbers of the 3-ball triangulated by a single tetrahedron.
 '''
-ball = SimplicialComplex()
+ball = BoundaryMatrix()
 
 # Add vertices
 ball.add_boundary_matrix(0, np.array([
@@ -47,7 +46,7 @@ print(f'3-Ball: {ball.get_betti_numbers()}')
 '''
 Compute the Betti numbers of the 2-sphere triangulated by the faces of a single tetrahedron.
 '''
-sphere = SimplicialComplex()
+sphere = BoundaryMatrix()
 
 sphere.add_boundary_matrix(0, np.array([
     [1,1,1,1]
@@ -78,7 +77,7 @@ print(f'2-Sphere: {sphere.get_betti_numbers()}')
 Compute the Betti numbers of the 2-dimensional Klein bottle
 '''
 
-klein = SimplicialComplex()
+klein = BoundaryMatrix()
 
 klein.add_boundary_matrix(0, np.array([
     [1,1,1,1]
@@ -113,7 +112,7 @@ print(f'Klein Bottle: {klein.get_betti_numbers()}')
 Compute the Betti numbers of the 2-dimensional torus
 '''
 
-torus = SimplicialComplex()
+torus = BoundaryMatrix()
 
 torus.add_boundary_matrix(0, np.array([
     [1,1,1,1,1,1,1,1,1]
@@ -169,7 +168,7 @@ print(f'Torus: {torus.get_betti_numbers()}')
 Compute the Betti numbers of the 2-dimensional mobius strip
 '''
 
-mobius = SimplicialComplex()
+mobius = BoundaryMatrix()
 
 mobius.add_boundary_matrix(0, np.array([
     [1,1,1,1,1]
@@ -203,7 +202,7 @@ print(f'Mobius Strip: {mobius.get_betti_numbers()}')
 Compute the Betti numbers of the 2-dimensional cylinder
 '''
 
-cylinder = SimplicialComplex()
+cylinder = BoundaryMatrix()
 
 cylinder.add_boundary_matrix(0, np.array([
     [1,1,1,1,1,1]
@@ -239,13 +238,13 @@ print(f'Cylinder: {cylinder.get_betti_numbers()}')
 '''
 Compute the Betti numbers of the 2-dimensional dunce cap
 
-I consider this the real magnum opus of this project. This is
-was by far the most difficult triangulation to compute boundary
-matrices for, not only due to the size of the triangulation, but
-due also to the complexity of the space.
+This calculation was the primary goal of this project. This was
+certainly the most difficult triangulation to define the boundary
+matrices for, mostly due to the number of simplices and face relations
+that one must keep track of throughout the construction.
 '''
 
-dunce = SimplicialComplex()
+dunce = BoundaryMatrix()
 
 dunce.add_boundary_matrix(0, np.array([
     [1,1,1,1,1,1,1,1]

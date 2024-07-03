@@ -1,6 +1,4 @@
-import numpy as np
-
-from simplicial_complex import SparseSimplicialComplex
+from simplicial.boundary_matrix import SparseBoundaryMatrix
 
 
 print('BETTI NUMBERS\n')
@@ -11,7 +9,7 @@ tetrahedron.
 
 Bonus: We can specify vertices using any data types supported by NumPy.
 '''
-ball = SparseSimplicialComplex()
+ball = SparseBoundaryMatrix()
 
 # Add vertices
 ball.add_simplices(
@@ -48,7 +46,7 @@ print(f'3-Ball:\t\t{ball.get_betti_numbers()}')
 Compute the Betti numbers of the 2-sphere triangulated by the faces of a
 single tetrahedron.
 '''
-sphere = SparseSimplicialComplex()
+sphere = SparseBoundaryMatrix()
 
 # Add vertices
 sphere.add_simplices(
@@ -79,7 +77,7 @@ print(f'2-Sphere:\t{sphere.get_betti_numbers()}')
 '''
 Compute the Betti numbers of the cylinder.
 '''
-cylinder = SparseSimplicialComplex()
+cylinder = SparseBoundaryMatrix()
 
 # Add vertices
 cylinder.add_simplices(
@@ -118,7 +116,7 @@ print(f'Cylinder:\t{cylinder.get_betti_numbers()}')
 '''
 Compute the Betti numbers of the mobius strip.
 '''
-mobius = SparseSimplicialComplex()
+mobius = SparseBoundaryMatrix()
 
 # Add vertices
 mobius.add_simplices(
@@ -157,7 +155,7 @@ print(f'Mobius Strip:\t{mobius.get_betti_numbers()}')
 '''
 Compute the Betti numbers of the torus.
 '''
-torus = SparseSimplicialComplex()
+torus = SparseBoundaryMatrix()
 
 # Add vertices
 torus.add_simplices(
@@ -223,7 +221,7 @@ print(f'Torus:\t\t{torus.get_betti_numbers()}')
 '''
 Compute the Betti numbers of the Klein bottle.
 '''
-klein = SparseSimplicialComplex()
+klein = SparseBoundaryMatrix()
 
 # Add vertices
 klein.add_simplices(

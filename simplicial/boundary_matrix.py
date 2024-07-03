@@ -5,7 +5,7 @@ import numpy as np
 from itertools import combinations
 from scipy.sparse import csc_matrix, find
 
-class SimplicialComplex:
+class BoundaryMatrix:
     '''
     Representation of a simplicial complex via its boundary matrices.
 
@@ -189,7 +189,7 @@ class SimplicialComplex:
 
 
 
-class SparseSimplicialComplex:
+class SparseBoundaryMatrix:
     '''
     Sparse matrix representation of a simplicial complex via its
     boundary matrices.
@@ -241,6 +241,7 @@ class SparseSimplicialComplex:
             Array of indices at which values of elements were found in
             test_elements.
         '''
+        test_elements = np.squeeze(test_elements)
         if len(test_elements.shape) < 2:
             return np.nonzero(elements[:, None] == test_elements)[1]
         return np.where((elements[:, None] == test_elements).all(-1))[-1]
@@ -316,7 +317,7 @@ class SparseSimplicialComplex:
             )
         
         self._set_index_map(p, simplices)
-        p_indices = self._get_indices(p, simplices)
+        p_indices = np.unique(self._get_indices(p, simplices))
         p_indices = self._expand_indices(p, p_indices)
 
         q_simplices = self._get_cofaces(simplices)
@@ -348,9 +349,6 @@ class SparseSimplicialComplex:
     def _sparse_snf(self, mat, x=0):
         '''
         Reduce sparse matrix over Z2 to Smith normal form.
-
-        Source: Edelsburnner & Harer - "Computational Topology: An
-        Introduction"
 
         Parameters:
         -----------
