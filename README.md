@@ -4,9 +4,12 @@
 This repository computes Betti numbers of a topological space. The Betti numbers of a topological space can be computed by first [triangulating](https://en.wikipedia.org/wiki/Triangulation_(topology)) the space by a [simplicial complex](https://en.wikipedia.org/wiki/Simplicial_complex), then representing this complex as a collection of boundary matrices, and lastly performing some reduction on these boundary matrices.
 
 This repository contains modules for storing simplicial complexes in the following formats:
-- Boundary matrix collection (`simplicial.boundary_matrix.BoundaryMatrix`)
-- Sparse boundary matrix collection (`simplicial.boundary_matrix.SparseBoundaryMatrix`)
-- Simplex tree (`simplicial.simplex_tree.SimplexTree`)
+- Boundary matrix collection
+  -`simplicial.boundary_matrix.BoundaryMatrix`
+- Sparse boundary matrix collection
+  -`simplicial.boundary_matrix.SparseBoundaryMatrix`
+- Simplex tree
+  -`simplicial.simplex_tree.SimplexTree`
   - See [this paper](https://arxiv.org/abs/2001.02581) by Boissonnat & Maria for a definition.
 
 The original purpose of this repository was to implement in code a general tool for solving the exercises given in Edelsbrunner and Harer's *Computational Topology: An Introduction*. Given there as exercises are a computation of the Betti numbers of the 2-dimensional [Klein bottle](https://en.wikipedia.org/wiki/Klein_bottle), as well as a triangulation of the [dunce cap](https://en.wikipedia.org/wiki/Dunce_hat_(topology)) and a verification of its Betti numbers. (The latter is posed as a high difficulty problem and indeed is significantly more involved; see `examples/boundary_matrix_examples.py`.)
