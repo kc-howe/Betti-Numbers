@@ -26,9 +26,6 @@ Computing the Betti numbers of a space also enables us to compute its [Euler cha
 ### Reduced Betti Numbers
 Reduced Betti numbers give a somewhat more intuitive and pleasing result when interpreting Betti numbers as p-dimensional holes. In brief, they are equivalent to the standard Betti numbers except in the case of p=0, where the reduced 0th Betti number is given by the 0th Betti number minus one. This guarantees that the 0th reduced Betti number counts gaps between disconnected vertices (i.e. 0-dimensional holes). Techinically, the procedure of reducing boundary matrices of a triangulating complex produces the reduced Betti numbers of a space. The `SimplicialComplex` class here stores the standard Betti numbers after their computation, however both forms are retrievable through their respective class methods.
 
-### Limitations
-Unfortunately, this approach to representing topological spaces and computing their Betti numbers is untenable for large complexes, as the boundary matrices of a complex are generally sparse and quite large. A sparse-matrix implementation would yield greater efficiency for larger complexes.
-
 ## Example
 To find the Betti numbers of the 3-dimensional ball, we can triangulate it with a single tetrahedron and find each p-th boundary matrix describing this tetrahedron.
 
@@ -40,7 +37,7 @@ To find the Betti numbers of the 3-dimensional ball, we can triangulate it with 
 '''
 Compute the Betti numbers of the 3-ball triangulated by a single tetrahedron.
 '''
-ball = SimplicialComplex()
+ball = BoundaryMatrix()
 
 # Add vertices
 ball.add_boundary_matrix(0, np.array([
@@ -83,13 +80,22 @@ When executed, this code outputs:
 ~~~
 These are the expected Betti numbers of the 3-ball. All of the p-th Betti numbers vanish for positive p, which matches our intuition that a solid ball has no holes.
 
-Additional examples regarding the following spaces are provided in `examples.py`:
+*Note: Using the `SimplexTree` class, the construction is much simpler, as this class supports inserting simplices simultaneously with their lower-dimensional faces. The simplex tree is internally converted to a sparse boundary matrix representation for Betti number calculation:*
+~~~
+ball = SimplexTree()
+ball.insert_full_simplex(1,2,3,4)
+
+print(f'3-Ball: {ball.get_betti_numbers()}')
+~~~
+
+Additional examples for the following spaces are provided in `examples/`:
 - The 2-dimensional sphere
 - The klein bottle
 - The torus
 - The mobius strip
 - The cylinder
 - The dunce cap
+  + Only in `boundary_matrix_examples.py`
 
 ## Drawing Tool Instructions
 
