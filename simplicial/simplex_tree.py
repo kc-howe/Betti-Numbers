@@ -387,6 +387,9 @@ class SimplexTree:
         raise ValueError(f'Simplex {simplex} is not collapsible.')
 
     def boundary_matrix(self):
+        '''
+        Convert to sparse boundary matrix.
+        '''
         
         boundary_matrix = SparseBoundaryMatrix()
 
@@ -400,9 +403,26 @@ class SimplexTree:
 
         return boundary_matrix
 
-    def betti_numbers(self):
+    def betti_numbers(self, reduced=False):
+        '''
+        Compute the betti numbers of the complex represented by self.
+
+        Parameters:
+        -----------
+        reduced : bool
+            Return reduced Betti numbers.
+        '''
         boundary_matrix = self.boundary_matrix()
-        return boundary_matrix.compute_betti_numbers()
+        if reduced:
+            return boundary_matrix.get_reduced_betti_numbers()
+        return boundary_matrix.get_betti_numbers()
+
+    def euler_characteristic(self):
+        '''
+        Compute Euler characteristic of the complex represented by self.
+        '''
+        betti_numbers = self.betti_numbers()
+        return sum(betti_numbers[::2]) - sum(betti_numbers[1::2])
 
     def to_dict(self):
         return self.root._to_dict()
