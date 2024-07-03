@@ -7,15 +7,13 @@ print('BETTI NUMBERS\n')
 Compute the Betti numbers of the 3-ball triangulated by a single
 tetrahedron.
 '''
-ball = SimplexTree
+ball = SimplexTree()
 
 # Add solids
-ball.insert_full_simplex([
-    ['A','B','C','D']
-])
+ball.insert_full_simplex('A','B','C','D')
 
 # Expected: [1,0,0,0]
-print(f'3-Ball:\t\t{ball.get_betti_numbers()}')
+print(f'3-Ball:\t\t{ball.betti_numbers()}')
 
 '''
 Compute the Betti numbers of the 2-sphere triangulated by the faces of a
@@ -23,16 +21,13 @@ single tetrahedron.
 '''
 sphere = SimplexTree()
 
-# Add faces
-sphere.insert_full_simplices([
-    [0,1,2],
-    [0,1,3],
-    [0,2,3],
-    [1,2,3]
-])
+# Add the tetrahedron with all of its faces, then remove the
+# tetrahedron, leaving only its faces
+sphere.insert_full_simplex(1,2,3,4)
+sphere.remove_simplex(1,2,3,4)
 
 # Expected: [1,0,1]
-print(f'2-Sphere:\t{sphere.get_betti_numbers()}')
+print(f'2-Sphere:\t{sphere.betti_numbers()}')
 
 '''
 Compute the Betti numbers of the cylinder.
@@ -50,7 +45,7 @@ cylinder.insert_full_simplices([
 ])
 
 # Expected: [1,1,0]
-print(f'Cylinder:\t{cylinder.get_betti_numbers()}')
+print(f'Cylinder:\t{cylinder.betti_numbers()}')
 
 '''
 Compute the Betti numbers of the mobius strip.
@@ -68,7 +63,7 @@ mobius.insert_full_simplices([
 ])
 
 # Expected: [1,1,0]
-print(f'Mobius Strip:\t{mobius.get_betti_numbers()}')
+print(f'Mobius Strip:\t{mobius.betti_numbers()}')
 
 '''
 Compute the Betti numbers of the torus.
@@ -98,7 +93,7 @@ torus.insert_full_simplices([
 ])
 
 # Expected: [1,2,1]
-print(f'Torus:\t\t{torus.get_betti_numbers()}')
+print(f'Torus:\t\t{torus.betti_numbers()}')
 
 '''
 Compute the Betti numbers of the Klein bottle.
@@ -128,7 +123,7 @@ klein.insert_full_simplices([
 ])
 
 # Expected: [1,2,1]
-print(f'Klein Bottle:\t{klein.get_betti_numbers()}')
+print(f'Klein Bottle:\t{klein.betti_numbers()}')
 
 print('\nEULER CHARACTERISTIC\n')
 

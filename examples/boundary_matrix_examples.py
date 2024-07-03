@@ -41,7 +41,7 @@ ball.add_boundary_matrix(3, np.array([
 ]))
 
 # Expected: [1,0,0,0]
-print(f'3-Ball: {ball.get_betti_numbers()}')
+print(f'3-Ball:\t\t{ball.get_betti_numbers()}')
 
 '''
 Compute the Betti numbers of the 2-sphere triangulated by the faces of a single tetrahedron.
@@ -71,7 +71,7 @@ sphere.add_boundary_matrix(2, np.array([
 # Notice this is the same construction as above but without the 3-dimensional filling
 
 # Expected: [1,0,1]
-print(f'2-Sphere: {sphere.get_betti_numbers()}')
+print(f'2-Sphere:\t{sphere.get_betti_numbers()}')
 
 '''
 Compute the Betti numbers of the 2-dimensional Klein bottle
@@ -106,7 +106,7 @@ klein.add_boundary_matrix(2, np.array([
 ]))
 
 # Expected: [1,2,1]
-print(f'Klein Bottle: {klein.get_betti_numbers()}')
+print(f'Klein Bottle:\t{klein.get_betti_numbers()}')
 
 '''
 Compute the Betti numbers of the 2-dimensional torus
@@ -162,7 +162,7 @@ torus.add_boundary_matrix(2, np.array([
 ]))
 
 # Expected: [1,2,1]
-print(f'Torus: {torus.get_betti_numbers()}')
+print(f'Torus:\t\t{torus.get_betti_numbers()}')
 
 '''
 Compute the Betti numbers of the 2-dimensional mobius strip
@@ -196,7 +196,7 @@ mobius.add_boundary_matrix(2, np.array([
 ]))
 
 # Expected: [1,1,0]
-print(f'Mobius Strip: {mobius.get_betti_numbers()}')
+print(f'Mobius Strip:\t{mobius.get_betti_numbers()}')
 
 '''
 Compute the Betti numbers of the 2-dimensional cylinder
@@ -233,7 +233,7 @@ cylinder.add_boundary_matrix(2, np.array([
 ]))
 
 # Expected: [1,1,0]
-print(f'Cylinder: {cylinder.get_betti_numbers()}')
+print(f'Cylinder:\t{cylinder.get_betti_numbers()}')
 
 '''
 Compute the Betti numbers of the 2-dimensional dunce cap
@@ -289,7 +289,7 @@ dunce.add_boundary_matrix(2, np.array([
 ]))
 
 # Expected: [1,0,0]
-print(f'Dunce Cap: {dunce.get_betti_numbers()}')
+print(f'Dunce Cap:\t{dunce.get_betti_numbers()}')
 
 print('\nEULER CHARACTERISTIC\n')
 
@@ -297,10 +297,10 @@ print('\nEULER CHARACTERISTIC\n')
 Euler characteristic computations
 '''
 
-print(f'3-Ball: {ball.euler_characteristic()}')
-print(f'2-Sphere: {sphere.euler_characteristic()}')
-print(f'Klein Bottle: {klein.euler_characteristic()}')
-print(f'Torus: {torus.euler_characteristic()}')
-print(f'Mobius Strip: {mobius.euler_characteristic()}')
-print(f'Cylinder: {cylinder.euler_characteristic()}')
-print(f'Dunce Cap: {dunce.euler_characteristic()}')
+print(f'3-Ball:\t\t{ball.euler_characteristic()}')
+print(f'2-Sphere:\t{sphere.euler_characteristic()}')
+print(f'Cylinder:\t{cylinder.euler_characteristic()}')
+print(f'Mobius Strip:\t{mobius.euler_characteristic()}')
+print(f'Torus:\t\t{torus.euler_characteristic()}')
+print(f'Klein Bottle:\t{klein.euler_characteristic()}')
+print(f'Dunce Cap:\t{dunce.euler_characteristic()}')
