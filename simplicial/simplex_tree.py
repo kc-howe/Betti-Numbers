@@ -2,7 +2,31 @@ from simplicial.boundary_matrix import SparseBoundaryMatrix
 
 class SimplexNode:
     '''
-    A helper class for representing nodes within a SimplexTree.
+    A helper class for representing a node/simplex within a SimplexTree.
+
+    Parameters:
+    -----------
+    label : Any, optional (default=None)
+        The label data associated with the given simplex. This should
+        be the name of some representative vertex in the simplex.
+    parent : SimplexNode, optional (default=None)
+        Pointer to the parent node. Should only be None for the root.
+    children : dict[Any, SimplexNode], optional (default=None)
+        Dictionary mapping child labels to their corresponding
+        SimplexNode objects.
+
+        If None, initializes as an empty dict. This should only stay
+        empty for leaf nodes in the tree.
+    
+    Attributes:
+    -----------
+    depth : int
+        Depth of node within the SimplexTree.
+    dimension : int
+        Dimension of the simplex stored at this node.
+    linked_node : SimplexNode
+        Pointer to the next node in a circular linked list of all nodes
+        in the SimplexTree which share depth and label with self.
     '''
     
     def __init__(self, label=None, parent=None, children=None):
@@ -87,12 +111,22 @@ class SimplexNode:
 
 class SimplexTree:
     '''
-    A shoddy implementation of the simplex tree data structure.
+    An implementation of the simplex tree data structure for storing
+    simplicial complexes.
 
     Simplex trees are an operation-efficient data structure for
     representing general (filtered) simplicial complexes. They were
     originally introduced by Boissonnat and Maria in the paper:
     https://arxiv.org/pdf/2001.02581
+
+    Attributes:
+    -----------
+    root : SimplexNode
+        The root node of the simplex tree. Represents the null simplex.
+    dimension : int
+        The dimension of the simplicial complex stored in the simplex
+        tree. Defined as the maximum dimension of any simplex in the
+        complex.
 
     '''
     
