@@ -99,7 +99,7 @@ Additional examples for the following spaces are provided in `examples/`:
 
 ## Drawing App Instructions
 
-The drawing app is an interactive tool built using PyGame which allows a user to draw up to 2-dimensional simplicial complexes. To draw a simplicial complex:
+The drawing app is an interactive tool built using PyGame which allows a user to draw up to 3-dimensional simplicial complexes. To draw a simplicial complex:
 1. Click to add vertices to the complex.
 2. Click existing vertices to select them (up to 4), and press `space` to add/remove the corresponding simplex.
 3. Right click a single vertex to remove it, or right click the canvas background to clear the current selection.
