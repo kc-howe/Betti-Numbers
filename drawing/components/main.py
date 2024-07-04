@@ -6,7 +6,8 @@ import pygame
 from components.draw import *
 from components.events import *
 from components.setup import *
-from components.update import *
+
+from simplicial.simplex_tree import SimplexTree
 
 def main():
     
@@ -24,11 +25,8 @@ def main():
 
     points = []
     selected = []
-    
-    simplex_verts = []
-    simplex_edges = []
-    simplex_triangles = []
-    simplex_tetrahedra = []
+
+    simplex_tree = SimplexTree()
 
     betti_numbers = []
     
@@ -52,39 +50,55 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 state = pygame.mouse.get_pressed()
                 if state[0]:
-                    selected, simplex_verts = handle_left_mouseclick(points, selected, simplex_verts)
+                    selected, simplex_tree = handle_left_mouseclick(
+                        points, selected, simplex_tree
+                    )
                 if state[2]:
-                    selected, simplex_verts, simplex_edges, simplex_triangles, simplex_tetrahedra = handle_right_mouseclick(points, selected, simplex_verts, simplex_edges, simplex_triangles, simplex_tetrahedra)
-                
-                betti_numbers = recompute_betti_numbers(simplex_verts, simplex_edges, simplex_triangles, simplex_tetrahedra)
+                    (
+                        selected,
+                        simplex_tree
+                    ) = handle_right_mouseclick(
+                        points,
+                        selected,
+                        simplex_tree
+                    )
+                betti_numbers = simplex_tree.betti_numbers()
             
             # Handle keyboard events
             if event.type == pygame.KEYDOWN:
                 key = event.key
-                selected, simplex_verts, simplex_edges, simplex_triangles, simplex_tetrahedra, betti_numbers = handle_keys(key, selected, simplex_verts, simplex_edges, simplex_triangles, simplex_tetrahedra, betti_numbers)
-                betti_numbers = recompute_betti_numbers(simplex_verts, simplex_edges, simplex_triangles, simplex_tetrahedra)
+                (
+                    selected,
+                    simplex_tree
+                ) = handle_keys(
+                    key,
+                    selected,
+                    simplex_tree
+                )
+                betti_numbers = simplex_tree.betti_numbers()
 
         SCREEN.fill(BACKGROUND_COLOR)
 
-        # Draw the complex specified by the vertex, edge, and triangle sets
+        # Draw the complex specified by the simplex lists
         points = []
-        for t in simplex_triangles:
-            t = list(t)
+        for tetrahedron in simplex_tree.locate_k_simplices(3):
+            tetrahedron = order_points_by_angle(tetrahedron.get_vertex_list())
             #pygame.draw.polygon(SCREEN, AQUA, t, 0)
-            draw_polygon_alpha(SCREEN, FACE_COLOR, t)
-        for th in simplex_tetrahedra:
-            th = order_tetrahedron(th)
+            draw_polygon_alpha(SCREEN, SOLID_COLOR, tetrahedron)
+        for triangle in simplex_tree.locate_k_simplices(2):
+            triangle = triangle.get_vertex_list()
             #pygame.draw.polygon(SCREEN, AQUA, t, 0)
-            draw_polygon_alpha(SCREEN, SOLID_COLOR, th)
-        for e in simplex_edges:
-            e = list(e)
-            draw_line_alpha(SCREEN, LINE_COLOR, e, 4)
-        for v in simplex_verts:
-            circle = pygame.draw.circle(SCREEN, BACKGROUND_COLOR, v, 14)
-            gfxdraw.aacircle(SCREEN, v[0], v[1], 14, LINE_COLOR)
-            gfxdraw.filled_circle(SCREEN, v[0], v[1], 14, LINE_COLOR)
-            gfxdraw.aacircle(SCREEN, v[0], v[1], 10, VERTEX_COLOR)
-            gfxdraw.filled_circle(SCREEN, v[0], v[1], 10, VERTEX_COLOR)
+            draw_polygon_alpha(SCREEN, FACE_COLOR, triangle)
+        for edge in simplex_tree.locate_k_simplices(1):
+            edge = edge.get_vertex_list()
+            draw_line_alpha(SCREEN, LINE_COLOR, edge, 4)
+        for vertex in simplex_tree.locate_k_simplices(0):
+            vertex = vertex.get_vertex_list()[0]
+            circle = pygame.draw.circle(SCREEN, BACKGROUND_COLOR, vertex, 14)
+            gfxdraw.aacircle(SCREEN, vertex[0], vertex[1], 14, LINE_COLOR)
+            gfxdraw.filled_circle(SCREEN, vertex[0], vertex[1], 14, LINE_COLOR)
+            gfxdraw.aacircle(SCREEN, vertex[0], vertex[1], 10, VERTEX_COLOR)
+            gfxdraw.filled_circle(SCREEN, vertex[0], vertex[1], 10, VERTEX_COLOR)
             points.append(circle)
         for s in selected:
             gfxdraw.aacircle(SCREEN, s[0], s[1], 10, SELECT_COLOR)
@@ -93,7 +107,9 @@ def main():
         # Display Betti numbers at the top of the screen if any
         text = font.render('', True, LINE_COLOR)
         if betti_numbers:
-            text = font.render('Betti Numbers: ' + str(betti_numbers), True, LINE_COLOR)
+            text = font.render(
+                'Betti Numbers: ' + str(betti_numbers), True, LINE_COLOR
+            )
         
         SCREEN.blit(text, (10, 10))
         pygame.display.update()

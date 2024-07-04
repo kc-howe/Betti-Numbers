@@ -74,12 +74,20 @@ class SimplexNode:
         
         return self
     
-    def get_vertex_list(self):
+    def get_vertex_list(self, safe=False):
         if self.parent is None:
             return []
-        vertex_list = self.parent.get_vertex_list()
-        vertex_list.append(self.label)
+        vertex_list = self.parent.get_vertex_list(safe=safe)
+        if safe:
+            vertex_list.append(self._get_safe_label())
+        else:
+            vertex_list.append(self.label)
         return vertex_list
+    
+    def _get_safe_label(self):
+        if hasattr(self.label, '__getitem__'):
+            return str(self.label)
+        return self.label
     
     def _get_verbose_label(self):
         '''
@@ -324,6 +332,10 @@ class SimplexTree:
                 if node.label == vertex_list[0]:
                     vertex_list.pop(0)
                 node = node.parent
+            if not vertex_list:
+                coface_roots.append(linked_node)
+        
+        coface_roots = list(set(coface_roots))
 
         # Traverse subtree at each coface root to enumerate all cofaces
         cofaces = []
@@ -419,6 +431,36 @@ class SimplexTree:
                 return
         
         raise ValueError(f'Simplex {simplex} is not collapsible.')
+    
+    def locate_k_simplices(self, k):
+        '''
+        Locate all k-simplices in the SimplexTree.
+
+        Parameters:
+        -----------
+        k : int
+            Dimension of simplices to locate.
+        
+        Returns:
+        --------
+        k_simplices : list[SimplexNode]
+            List of SimplexNode objects representing the k-simplices in
+            the SimplexTree.
+        '''
+
+        k_simplices = []
+        
+        to_visit = [self.root]
+        while to_visit:
+            node = to_visit.pop(0)
+
+            if node.depth == k + 1:
+                k_simplices.append(node)
+
+            if node.depth <= k:
+                to_visit.extend(node.children.values())
+
+        return k_simplices
 
     def boundary_matrix(self):
         '''
@@ -426,14 +468,19 @@ class SimplexTree:
         '''
         
         boundary_matrix = SparseBoundaryMatrix()
-
-        level = list(self.root.children.values())
-        while any(level):
-            level_simplices = [node.get_vertex_list() for node in level]
-            if len(level_simplices[0]) == 1:
-                level_simplices = [s[0] for s in level_simplices]
-            boundary_matrix.add_simplices(level_simplices)
-            level = [child for node in level for child in node.children.values()]
+        for k in range(self.dimension+1):
+            if k == 0:
+                k_simplices = [
+                    s._get_safe_label() for s in self.locate_k_simplices(k)
+                ]
+            else:
+                k_simplices = [
+                    s.get_vertex_list(
+                        safe=True
+                    ) for s in self.locate_k_simplices(k)
+                ]
+            if k_simplices:
+                boundary_matrix.add_simplices(k_simplices)
 
         return boundary_matrix
 
@@ -446,6 +493,8 @@ class SimplexTree:
         reduced : bool
             Return reduced Betti numbers.
         '''
+        if not self.root.children:
+            return []
         boundary_matrix = self.boundary_matrix()
         if reduced:
             return boundary_matrix.get_reduced_betti_numbers()
@@ -476,8 +525,14 @@ class SimplexTree:
 if __name__ == '__main__':
 
     s = SimplexTree()
+    s.insert_full_simplex((1175, 568),(1087, 675),(1197, 725),(1252, 666))
+    s.remove_simplex((1175, 568),(1087, 675),(1197, 725),(1252, 666))
+    s.remove_simplex((1252, 666))
+    print(s.betti_numbers())
+
+    s = SimplexTree()
     s.insert_full_simplex(0,1,2)
-    s.remove_simplex(0,1,2,)
+    s.remove_simplex(0,1,2)
     print(s.betti_numbers())
 
     s = SimplexTree()
