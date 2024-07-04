@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 
 import pygame
 
@@ -15,7 +16,9 @@ def main():
 
     clock = pygame.time.Clock()
 
-    icon = pygame.image.load('images/triangle-icon.png')
+    current_dir = Path(__file__).parent
+    icon_path = current_dir / 'images/triangle-icon.png'
+    icon = pygame.image.load(icon_path)
     pygame.display.set_icon(icon)
     pygame.display.set_caption('Simplicial Complex Drawing Tool')
 

@@ -30,7 +30,7 @@ Reduced Betti numbers give a somewhat more intuitive and pleasing result when in
 To find the Betti numbers of the 3-dimensional ball, we can triangulate it with a single tetrahedron and find each p-th boundary matrix describing this tetrahedron.
 
 <p align="center">
-  <img src="images/ball-triangulation.png">
+  <img src="docs/images/ball-triangulation.png">
 </p>
 
 ~~~
@@ -107,5 +107,5 @@ The drawing app is an interactive tool built using PyGame which allows a user to
 
 <br>
 <p align="center">
-  <img src="images/drawing-tool-demo.png">
+  <img src="docs/images/drawing-tool-demo.png">
 </p>
