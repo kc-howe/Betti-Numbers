@@ -35,7 +35,6 @@ class SimplexNode:
         self.children = children if children is not None else dict()
 
         self.depth = self._initialize_depth()
-        self.dimension = self.depth - 1
         self.linked_node = self._initialize_linked_node()
 
         pass
@@ -73,7 +72,7 @@ class SimplexNode:
                 return node
         
         return self
-    
+        
     def get_vertex_list(self, safe=False):
         if self.parent is None:
             return []
@@ -144,6 +143,22 @@ class SimplexTree:
         self.dimension = -1
 
         pass
+
+    def _get_subtree_height(self, node=None):
+        if node is None:
+            node = self.root
+        
+        if not node.children:
+            return 0
+        
+        child_heights = [
+            self._get_subtree_height(c) for c in node.children.values()
+        ]
+
+        return max(child_heights) + 1
+    
+    def get_dimension(self):
+        return self._get_subtree_height() - 1
     
     def search_simplex(self, *simplex, from_node=None):
         '''
@@ -274,6 +289,9 @@ class SimplexTree:
         simplex :  list[Any]
             Simplex given as an enumeration of its vertices.
         '''
+        if not simplex:
+            raise ValueError('Cannot remove empty simplex.')
+
         cofaces = self.locate_cofaces(*simplex)
         for coface in cofaces:
             removed_node = coface.parent.children.pop(coface.label, None)
@@ -283,7 +301,7 @@ class SimplexTree:
         removed_node = simplex_node.parent.children.pop(simplex_node.label, None)
         del removed_node
         
-        pass
+        return
 
     def _locate_external_cofaces(self, *simplex):
         '''
@@ -309,10 +327,8 @@ class SimplexTree:
         visited_depths = []
         while to_visit:
             node = to_visit.pop(0)
-            if node.depth < min_depth:
+            if node.depth < min_depth or node.depth in visited_depths:
                 to_visit.extend(node.children.values())
-                continue
-            if node.depth in visited_depths:
                 continue
             if node.label == last:
                 all_linked_nodes.extend(node.get_linked_nodes())
@@ -523,12 +539,6 @@ class SimplexTree:
         return res
 
 if __name__ == '__main__':
-
-    s = SimplexTree()
-    s.insert_full_simplex((1175, 568),(1087, 675),(1197, 725),(1252, 666))
-    s.remove_simplex((1175, 568),(1087, 675),(1197, 725),(1252, 666))
-    s.remove_simplex((1252, 666))
-    print(s.betti_numbers())
 
     s = SimplexTree()
     s.insert_full_simplex(0,1,2)

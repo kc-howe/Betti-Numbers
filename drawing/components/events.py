@@ -139,15 +139,17 @@ def handle_keys(key, selected, simplex_tree):
     # If space bar is pressed, draw/remove the simplex corresponding to
     # the affine hull of the selected points
     if key == pygame.K_SPACE:
+        
+        if selected:
+            
+            simplex = sorted(selected, key=lambda x: str(x))
 
-        simplex = sorted(selected, key=lambda x: str(x))
-
-        if simplex_tree.search_simplex(*simplex) is None:
-            simplex_tree.insert_full_simplex(*simplex)
-        else:
-            simplex_tree.remove_simplex(*simplex)
-            if len(simplex) == 1:
-                selected = []
+            if simplex_tree.search_simplex(*simplex) is None:
+                simplex_tree.insert_full_simplex(*simplex)
+            else:
+                simplex_tree.remove_simplex(*simplex)
+                if len(simplex) == 1:
+                    selected = []
     
     if key == pygame.K_r:
         selected = []
