@@ -80,7 +80,7 @@ def main():
         SCREEN.fill(BACKGROUND_COLOR)
 
         # Draw the complex specified by the simplex lists
-        points = []
+        points = list()
         for tetrahedron in simplex_tree.locate_k_simplices(3):
             tetrahedron = order_points_by_angle(tetrahedron.get_vertex_list())
             #pygame.draw.polygon(SCREEN, AQUA, t, 0)
@@ -99,7 +99,7 @@ def main():
             gfxdraw.filled_circle(SCREEN, vertex[0], vertex[1], 14, LINE_COLOR)
             gfxdraw.aacircle(SCREEN, vertex[0], vertex[1], 10, VERTEX_COLOR)
             gfxdraw.filled_circle(SCREEN, vertex[0], vertex[1], 10, VERTEX_COLOR)
-            points.append(circle)
+            points.append((circle, vertex))
         for s in selected:
             gfxdraw.aacircle(SCREEN, s[0], s[1], 10, SELECT_COLOR)
             gfxdraw.filled_circle(SCREEN, s[0], s[1], 10, SELECT_COLOR)

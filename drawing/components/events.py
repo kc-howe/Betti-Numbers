@@ -38,22 +38,16 @@ def handle_left_mouseclick(points, selected, simplex_tree):
 
     # Check if an already existing point has been clicked
     exists = False
-    for p in points:
-        if p.collidepoint(pos):
-            clicked_point = p
-            clicked_center = clicked_point.center
-            if clicked_center in selected:
-                select = False
-                deselect = True
+    for rect, vertex in points:
+        if rect.collidepoint(pos):
             exists = True
-
-    # Draw the point if it doesn't exist
+            if vertex in selected:
+                selected.remove(vertex)
+            else:
+                selected.append(vertex)
+    
     if not exists:
         simplex_tree.insert_simplex(pos)
-    elif select:
-        selected.append(clicked_center)
-    elif deselect and clicked_center in selected:
-        selected.remove(clicked_center)
     
     if len(selected) > 4:
         del selected[0]
@@ -93,20 +87,15 @@ def handle_right_mouseclick(points, selected, simplex_tree):
     pos = pygame.mouse.get_pos()
 
     # Check if an already existing point has been clicked
-    exists = False
-    for p in points:
-        if p.collidepoint(pos):
-            clicked_point = p
-            exists = True
+    clicked_vertex = None
+    for rect, vertex in points:
+        if rect.collidepoint(pos):
+            clicked_vertex = vertex
+            simplex_tree.remove_simplex(clicked_vertex)
+            if clicked_vertex in selected:
+                selected.remove(clicked_vertex)
     
-    # Erase the point and associated simplices if it exists
-    if exists:
-        pos = clicked_point.center
-        simplex_tree.remove_simplex(pos)
-        if pos in selected:
-            selected.remove(pos)
-    
-    else:
+    if clicked_vertex is None:
         selected = []
 
     # Reset screen
